@@ -15,8 +15,7 @@ import { ToastService } from 'src/app/utils/services/toast.service';
 export class BookClientComponent implements OnInit {
 
   api = environment.apiUrl;   
-
-  filterText: string = '';
+  
   books: BookClient[] = [];
   totalRecords: number = 0;
   loading: boolean = true;
@@ -24,11 +23,6 @@ export class BookClientComponent implements OnInit {
 
   @ViewChild('dv', { static: false }) dataView?: DataView;  
   readonly limit: number = 50; 
-
-
-
-
-  filterValue = ''; // Almacena el valor del filtro
 
 
   filteredBooks: BookClient[] = [];
@@ -74,7 +68,7 @@ export class BookClientComponent implements OnInit {
     this.cartService.addBooksToCart( book_id ).subscribe({
       next: ( resp ) => {
 
-        this.toastService.showSuccess( 'Mensaje del sistema', resp!.message  );
+        // this.toastService.showSuccess( 'Mensaje del sistema', resp!.message  );
 
       },
       error: ( err ) => {

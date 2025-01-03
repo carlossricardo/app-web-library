@@ -54,7 +54,7 @@ export class SignInComponent implements OnInit {
     if (this.signInForm.invalid) { return; }
     
     if (this.signInForm.valid) {
-      
+      this.signInForm.disable();
       
       const form : AuthRequest = this.signInForm.value; 
       this.signInService(form);

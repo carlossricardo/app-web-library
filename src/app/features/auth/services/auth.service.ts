@@ -105,19 +105,14 @@ export class AuthService {
     localStorage.setItem(key, JSON.stringify(token));
   }
 
-  removeLocalStorage( key:string ){
-    // localStorage.removeItem(key);
+  removeLocalStorage( key:string ){    
     this.tokenService.removeToken();
   }
 
-  // get token(): string {
-  //   return JSON.parse(this.tokenService.getToken()!);
-  //   // return JSON.parse(localStorage.getItem('token')!) || '';
-  // } 
 
-  get token(): string | null {
-    // Retorna el token tal cual desde localStorage
-    return localStorage.getItem('token'); // Suponiendo que guardas el token como string
+
+  get token(): string | null {    
+    return localStorage.getItem('token');
   }
 
   getToken(): string | null {
