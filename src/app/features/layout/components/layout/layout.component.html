@@ -1,0 +1,56 @@
+<!-- <p>layout works!</p> -->
+
+<p-toast></p-toast>
+
+
+<p-confirmDialog #cd>
+    <ng-template pTemplate="headless" let-message >
+        <div class="flex flex-column align-items-center p-5 surface-overlay border-round">
+            <div class="border-circle bg-primary inline-flex justify-content-center align-items-center h-6rem w-6rem">
+                
+
+                <i class="text-5xl {{ message.icon }}"></i>
+
+                
+            </div>
+            <span class="font-bold text-2xl block mb-2 mt-4">
+                {{ message.header }}
+            </span>
+            <p class="mb-0">{{ message.message }}</p>
+            <div class="flex align-items-center gap-2 mt-4">
+                <button 
+                    pButton 
+                    label="Aceptar" 
+                    (click)="cd.accept()" 
+                    class="w-8rem">
+                </button>
+
+                <button 
+                    pButton 
+                    label="Cancelar" 
+                    (click)="cd.reject()" 
+                    class="p-button-outlined w-8rem ">
+                </button>
+
+            </div>
+        </div>
+    </ng-template>
+</p-confirmDialog>
+
+<!-- <p-confirmDialog /> -->
+<div class="layout-wrapper" [ngClass]="containerClass">
+    <app-topbar></app-topbar>
+    <div class="layout-sidebar">
+        <app-sidebar ></app-sidebar>
+    </div>
+    <div class="layout-main-container">
+        <div class="layout-main">            
+            <router-outlet></router-outlet>
+        </div>
+        <app-footer></app-footer>
+    </div>
+    
+    <div class="layout-mask"></div>
+    
+</div>
+

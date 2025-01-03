@@ -1,0 +1,12 @@
+.avatar-button {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    box-shadow: none; /* Remueve el contorno o sombra del botón */
+    cursor: pointer; /* Si deseas que siga actuando como un botón */
+}
+.avatar-button .p-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

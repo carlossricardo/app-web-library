@@ -1,0 +1,271 @@
+
+<p-confirmDialog #cd>
+    <ng-template pTemplate="headless" let-message>
+        <div class="flex flex-column align-items-center p-5 surface-overlay border-round">
+            <div class="border-circle bg-primary inline-flex justify-content-center align-items-center h-6rem w-6rem">
+                <i class="pi pi-shield text-5xl"></i>
+            </div>
+            <span class="font-bold text-2xl block mb-2 mt-4">
+                {{ message.header }}
+            </span>
+            <p class="mb-0">{{ message.message }}</p>
+            <div class="flex align-items-center gap-2 mt-4">
+                <button 
+                    pButton 
+                    label="Aceptar" 
+                    (click)="cd.accept()" 
+                    class="w-8rem">
+                </button>
+
+                <button 
+                    pButton 
+                    label="Cancelar" 
+                    (click)="cd.reject()" 
+                    class="p-button-outlined w-8rem ">
+                </button>
+
+            </div>
+        </div>
+    </ng-template>
+</p-confirmDialog>
+
+<div class="flex align-content-center justify-content-center min-h-screen surface-100">
+
+    <div>
+        <div class="text-center ">
+            <span class="block text-7xl text-primary font-bold py-4">Library app</span> 
+        </div>
+
+        <div class="bg-white border-round p-5 mb-6 mt-2 shadow-4 md:mx-4">
+            <div class="w-30rem">
+                <div class="text-center -my-3">
+                    <div class="text-4xl font-bold mb-3">Crea una cuenta</div>
+                    <p class="-mt-3 mb-4 text-700 line-height-3">Es fácil y rápido.</p>
+                </div>
+                <p-divider></p-divider>
+
+                <form [formGroup]="registerForm">
+
+                    <div class="formgrid grid p-fluid ">
+                        <div class="field col-12">
+                            <!-- <p-divider></p-divider> -->
+
+                            
+
+                        </div>
+
+
+          
+                        <div class="field col-12 md:col-12">
+                            <p-fileUpload 
+                                    
+                                (onSelect)="onSelect($event)" 
+                                [multiple]="false"                             
+                                accept="image/*" 
+                                maxFileSize="1000000" 
+                                class="pb-4 "
+                                
+                            >
+
+                                <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback" let-clearCallback="clearCallback" >
+                                    <div class="flex flex-wrap justify-content-between align-items-center flex-1 gap-2">
+                                        <div class="flex gap-2">
+                                            <p-button label="Subir"  [link]="true" icon="pi pi-images" (onClick)="choose($event, chooseCallback)"   />
+                                            
+                                            <p-button label="Limpiar"  [link]="true" icon="pi pi-trash"  (onClick)="clearCallback()" [disabled]="!files || files.length === 0" />
+                                        </div>
+                                    
+                                    </div>
+                                </ng-template>
+                                <ng-template let-files  pTemplate="content" let-removeFileCallback="removeFileCallback">
+
+                                    <div *ngIf="files?.length > 0">
+                                        <div *ngFor="let file of files; let i = index" class="flex flex-column surface-border align-items-center gap-3">
+                                            <div>                                                    
+                                                <div class="relative">
+                                                    <p-image 
+                                                        [src]="file.objectURL" 
+                                                        alt="file.name" 
+                                                        [imageStyle]="{ 'border-radius': '10px', 'padding': '5px' }"
+                                                        height="200" 
+                                                        
+                                                    />
+
+                                    
+                                                </div>
+                                            </div>                                                
+                                            
+                                        </div>
+                                        
+                                        
+                                    </div>
+
+                                    
+
+
+                                    
+
+                                </ng-template>
+
+                                <ng-template pTemplate="file"> </ng-template>
+                                <ng-template pTemplate="empty">
+                                    <div class="flex align-items-center justify-content-center flex-column">
+                                        <i class="pi pi-cloud-upload border-2 border-circle p-5 text-8xl text-400 border-400"></i>
+                                        <p class="mt-4 mb-0">Arrastra y suelta tu imagen aquí para cargarlos.</p>
+                                    </div>
+                                </ng-template>
+                        
+                            </p-fileUpload>
+
+
+                            
+                         
+
+
+                        </div>
+                        
+                        <div class="field col-12">
+                            <p class="text-red-500 font-medium">El campo es obligatorio (*)</p>
+
+                        </div>
+
+                    
+                        <div class="field col-12 md:col-6">
+
+                            
+                            <input 
+                                pInputText id="identification" placeholder="Identificación" type="text" 
+                                formControlName="identification" [ngClass]="{ 'is-invalid': fieldsValidate('identification')}"
+                                
+                            />
+                            <small 
+                                *ngIf="registerForm.get('identification')?.errors?.['required']" 
+                                
+                            >El campo es requerido.</small>
+                            <small *ngIf="registerForm.get('identification')?.errors?.['cedulaInvalida']">La cédula es inválida.</small>
+                            
+                            
+                            
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            
+                            <input 
+                                pInputText id="names" placeholder="Nombres" type="text" 
+                                formControlName="names" [ngClass]="{ 'is-invalid': fieldsValidate('names')}"
+                                
+                            />
+                            <small 
+                                *ngIf="registerForm.get('names')?.errors?.['required']" 
+                                
+                            >El campo es requerido.</small>
+                            
+                            
+                            
+                            
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            
+                            <input 
+                                pInputText id="surnames" placeholder="Apellidos" type="text" 
+                                formControlName="surnames" [ngClass]="{ 'is-invalid': fieldsValidate('surnames')}"
+                                
+                            />
+                            <small 
+                                *ngIf="registerForm.get('surnames')?.errors?.['required']" 
+                                
+                            >El campo es requerido.</small>
+                            
+                            
+                            
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            
+                            <input 
+                                pInputText id="phone" placeholder="Teléfono" type="tel"
+                                formControlName="phone" [ngClass]="{ 'is-invalid': fieldsValidate('phone')}"
+                                
+                            />
+                            <small 
+                                *ngIf="registerForm.get('phone')?.errors?.['required']" 
+                                
+                            >El campo es requerido.</small>
+                            <small *ngIf="registerForm.get('phone')?.errors?.['pattern']">Ingresa solo números.</small>
+                            <small *ngIf="registerForm.get('phone')?.errors?.['pattern']">El teléfono debe contener exactamente 10 dígitos.</small>
+                            
+                            
+                            
+                        </div>
+                        <div class="field col-12 md:col-6">
+                            
+                            <input 
+                                pInputText id="email" placeholder="Correo electrónico" type="text" 
+                                formControlName="email" [ngClass]="{ 'is-invalid': fieldsValidate('email')}"
+                                
+                            />
+                            <small 
+                                *ngIf="registerForm.get('email')?.errors?.['required']" 
+                                
+                            >El campo es requerido.</small>
+                            <small *ngIf="registerForm.get('email')?.errors?.['email']">Debe ser un correo electrónico.</small>
+                            
+                            
+                            
+                        </div>
+                        <div class="field col-12 md:col-6">
+          
+
+                            <p-password 
+                            
+                            [feedback]="false" 
+                                formControlName="password" [ngClass]="{ 'is-invalid': fieldsValidate('password')}"
+                                [toggleMask]="true" 
+                            />
+                            <small 
+                                *ngIf="registerForm.get('password')?.errors?.['required']" 
+                                
+                            >El campo es requerido.</small>
+                            <small *ngIf="registerForm.get('password')?.errors?.['minlength']">Mínimo 6 caracteres.</small>
+                            <small *ngIf="registerForm.get('password')?.errors?.['pattern']">Debe contener al menos una letra mayúscula.</small>
+                            
+                            
+                            
+                        </div>
+
+
+                    </div>
+                    <button 
+                        pButton pRipple 
+                        label="Registrarte"
+                        class="w-full"
+                        [disabled]="registerForm.invalid"
+                        (click)="onClickRegister()"
+                    ></button>
+
+                    <div class="text-center mt-2">
+                        <!-- <p-button label="¿Ya tienes una cuenta?" [link]="true" /> -->
+
+
+                        <a routerLink="/authentication/login"  rel="noopener noreferrer" class="p-button p-button-link font-bold">
+                            ¿Ya tienes una cuenta?
+                        </a>
+
+                    </div>
+
+
+
+                    
+                </form>
+
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+

@@ -1,0 +1,89 @@
+<div class="grid">
+
+    <div class="col-12 -mb-4">
+
+        <form  [formGroup]="formCategory">
+
+
+            <div class=" p-fluid p-formgrid grid pt-2  ">
+
+
+              
+                <div class="field col-12 ">
+                    <p class="font-medium text-red-700">El campo es requerido (*)</p>
+                </div>
+
+                <div class="field col-12 md:col-6  -mt-3   ">
+                    <label class="text-blue-700 font-medium "  for="username">Código*</label>                            
+                    <input 
+                        pInputText id="zip" placeholder="Ej. name" type="text" 
+                        formControlName="code" [ngClass]="{ 'is-invalid': fieldsValidate('code')}"
+                        
+                    />
+                    <small 
+                        *ngIf="formCategory.get('code')?.errors?.['required']"
+                    >El campo es requerido.</small>
+                </div> 
+    
+    
+                <div class="field col-12 md:col-6  -mt-3   ">
+                    <label class="text-blue-700 font-medium "  for="username">Nombre*</label>                            
+                    <input 
+                        pInputText id="zip" placeholder="Ej. name" type="text" 
+                        formControlName="name" [ngClass]="{ 'is-invalid': fieldsValidate('name')}"
+                        
+                    />
+                    <small 
+                        *ngIf="formCategory.get('name')?.errors?.['required']"
+                    >El campo es requerido.</small>
+                </div> 
+
+                <div class="field col-12  -mt-3 ">
+                    <label class="text-blue-700 font-medium" for="username">Descripción*</label>                                        
+                    <textarea 
+                        placeholder="Ej. Centro de Movilización" rows="3" cols="30"  
+                        pInputTextarea
+                        formControlName="description" [ngClass]="{ 'is-invalid': fieldsValidate('description')}"
+                    ></textarea>
+                    <small 
+                        *ngIf="formCategory.get('description')?.errors?.['required']"
+                    >La descripción es requerida.</small>
+                </div> 
+
+
+                <div class="field col-12 md:col-4 -mt-3    ">
+                    <label class="text-blue-700 font-medium "  for="username">Estado*</label>                            
+                    <br>
+                    <p-inputSwitch formControlName="status" [ngClass]="{ 'is-invalid': fieldsValidate('status')}"  />
+                    <br>
+                    <small 
+                        *ngIf="formCategory.get('status')?.errors?.['required']"
+                    >El campo es requerido.</small>
+                </div> 
+
+                
+
+            </div>
+
+
+
+        </form>
+
+
+        <button 
+            pButton pRipple 
+            
+            [label]=" !categoryData ? 'Guardar registro': 'Guardar cambios'"
+            [disabled]=" !isChange || !formCategory.valid " 
+            (click)="isChange ? onClickCreateUpdateCategory(): null"           
+            class="w-full "
+        ></button>
+
+
+
+
+
+
+    </div>
+</div>
+

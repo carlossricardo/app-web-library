@@ -1,0 +1,224 @@
+<div class="grid flex align-content-center align-items-center">
+    <div class="col-4 sm:col-2 md:col-2 lg:col-2">
+        <label class="text-700 text-lg font-semibold">Principal</label>
+
+    </div>
+    <div class="col-8 sm:col-10 md:col-10 lg:col-10">
+        <p-divider></p-divider>
+    </div>
+</div>
+ 
+<div class="grid mx-2">
+
+    <div class="col-12 sm:col-6">
+
+        
+        <div class="flex align-items-center gap-2">
+            <i class="pi pi-barcode text-primary text-1xl"></i> 
+
+            <div class="mx-2">
+                <div class="text-md font-semibold text-700 mt-2">Registro</div>
+                <span class="font-medium text-secondary text-md">{{ loanValue.id }} </span> 
+            </div>
+        </div>
+        <div class="flex align-items-center gap-2">
+            <i class="pi pi-calendar-clock text-primary text-1xl"></i> 
+
+            <div class="mx-2">
+                <div class="text-md font-semibold text-700 mt-2">Fecha de creación</div>
+                <span class="font-medium text-secondary text-md">{{  loanValue.created_at  | date:'yyyy-MM-dd HH:mm:ss' }} </span> 
+            </div>
+        </div>
+        <div class="flex align-items-center gap-2">
+            <i class="pi pi-calendar-clock text-primary text-1xl"></i> 
+
+            <div class="mx-2">
+                <div class="text-md font-semibold text-700 mt-2">Fecha de entrega</div>
+                <span class="font-medium text-secondary text-md">{{  loanValue.date_returned  | date:'yyyy-MM-dd HH:mm:ss' }} </span> 
+            </div>
+        </div>
+        <div class="flex align-items-center gap-2">
+            <i class="pi pi-list text-primary text-1xl"></i> 
+
+            <div class="mx-2">
+                <div class="text-md font-semibold text-700 mt-2">Número de ejemplares</div>
+                <span class="font-medium text-secondary text-md">{{ loanValue.total_units }} </span> 
+            </div>
+        </div>
+            
+        
+    </div>
+    
+    <div class="col-12 sm:col-6">
+
+        
+
+        <div class="flex align-items-center gap-2">
+            <i class="pi pi-id-card text-primary text-1xl"></i> 
+
+            <div class="mx-2">
+                <div class="text-md font-semibold text-700 mt-2">Indentificación</div>
+                <span class="font-medium text-secondary text-md">{{ loanValue.user.person.identification }} </span> 
+            </div>
+        </div>
+        <div class="flex align-items-center gap-2">
+            <i class="pi pi-user text-primary text-1xl"></i> 
+
+            <div class="mx-2">
+                <div class="text-md font-semibold text-700 mt-2">Nombres</div>
+                <span class="font-medium text-secondary text-md"> {{ loanValue.user.person.names }}  {{ loanValue.user.person.surnames  }} </span> 
+            </div>
+        </div>
+        <div class="flex align-items-center gap-2">
+            <i class="pi pi-envelope text-primary text-1xl"></i> 
+
+            <div class="mx-2">
+                <div class="text-md font-semibold text-700 mt-2">Correo electrónico</div>
+                <span class="font-medium text-secondary text-md"> {{ loanValue.user.email }} </span> 
+            </div>
+        </div>
+        <div class="flex align-items-center gap-2">
+            <i class="pi pi-phone text-primary text-1xl"></i> 
+
+            <div class="mx-2">
+                <div class="text-md font-semibold text-700 mt-2">Telefóno</div>
+                <span class="font-medium text-secondary text-md"> {{ loanValue.user.person.phone }} </span> 
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-12 -mt-3">
+        <p-divider></p-divider>
+        <div class="flex align-items-center gap-2">
+            <i class="pi pi-exclamation-circle text-1xl" style="color: red;"></i> 
+
+            <div class="mx-2">
+                <div class="text-md font-semibold text-700 mt-2">Nota</div>
+                <span class="font-medium text-secondary text-md"> {{ loanValue.note ? loanValue.note : 'No hay detalles disponibles.' }} </span> 
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<div class="grid flex align-content-center align-items-center">
+    <div class="col-4 sm:col-2 md:col-2 lg:col-2">
+        <label class="text-700 text-lg font-semibold">Detalles</label>
+
+    </div>
+    <div class="col-8 sm:col-10 md:col-10 lg:col-10">
+        <p-divider></p-divider>
+    </div>
+</div>
+
+<p-dataView  
+[value]="loanValue.details"
+
+
+>
+
+
+    <ng-template pTemplate="list" let-loans>
+        <div class="grid grid-nogutter">
+            <div class="col-12" *ngFor="let item of loans; let first = first " class="col-12">
+                <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3" [ngClass]="{ 'border-top-1 surface-border': !first }">
+                    <div class="md:w-10rem relative">
+                        <img class="border-round w-full" src="{{api}}/files/getFile/books/{{item.book.image}}" 
+                                style="max-width: 80px; max-height: 200px; border-radius: 20px;" />
+                        
+                        
+                    </div>
+
+                    <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+                        <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
+                            <div>
+                                <div class="text-md font-semibold text-900 mt-2">{{ item.book.title }}</div>
+                                <span class="font-medium text-secondary text-sm">{{ item.book.autor }}</span>
+                            </div>
+                            <div class="surface-100 p-1" style="border-radius: 30px">
+                                <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
+                                    <span class="text-700 font-medium text-sm">{{ item.book.units }} disponibles</span>
+                                    <i class="pi pi-database text-yellow-500"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-column md:align-items-end gap-5">
+                            <span class="text-xl font-semibold text-700">{{  item.quantity }}</span>
+                            <div class="flex flex-row-reverse md:flex-row gap-2">
+                                <p-button icon="pi pi-heart" [outlined]="true" />
+                                <p-button icon="pi pi-database" class="flex-auto md:flex-initial white-space-nowrap" label="Ir a libros" [disabled]="item.inventoryStatus === 'OUTOFSTOCK'" />
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</p-dataView>
+
+
+<div>
+    
+    <div class="grid flex align-content-center align-items-center">
+        <div class="col-4 sm:col-2 md:col-2 lg:col-2">
+            <label class="text-700 text-lg font-semibold">Solicitud</label>
+
+        </div>
+        <div class="col-8 sm:col-10 md:col-10 lg:col-10">
+            <p-divider></p-divider>
+        </div>
+    </div>
+
+
+    <div class="m-3">
+
+        <form  [formGroup]="formLoan">
+
+            <div class="formgroup-inline">
+                <div class="field-checkbox"  *ngFor="let state of statuses">
+                    <p-radioButton 
+                    [value]="state.value" 
+                    formControlName="status"
+                />
+                <label class="">
+                    {{ state.name }}
+                </label>
+                </div>
+          
+            </div>
+        </form>
+    </div>
+
+
+
+    <br>
+
+
+
+
+    <button 
+        pButton pRipple 
+        
+        label="Guardar cambios"
+        [disabled]=" !isChange || !formLoan.valid"
+        (click)="isChange ? onClickVerifyLoan(): null"
+        class="w-full "
+    ></button>
+
+
+
+
+</div>
+
+

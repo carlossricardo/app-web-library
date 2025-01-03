@@ -1,0 +1,45 @@
+
+
+<div class="layout-menu">
+    
+    
+    <div class="border-round surface-100 hover:surface-200   flex align-items-center justify-content-center h-3rem md:w-20rem">
+
+
+        <ng-container *ngIf="authService.user$ | async as user; else loading">
+            <p-avatar 
+
+                image="{{api}}/files/getFile/users/{{user?.person?.image}}"
+                styleClass="mr-2" 
+                
+                shape="circle" 
+            />
+            <span class="font-bold">{{ user?.person?.names }} {{ user?.person?.surnames }} </span>
+        </ng-container>
+        <ng-template #loading>
+            <div class="loading-avatar font-bold">
+                ...
+            </div>
+        </ng-template>
+        
+    </div>
+    
+    <div class=" my-1">
+        <p-panelMenu [multiple]="true" [model]="items" styleClass="w-full md:w-20rem">
+            <ng-template pTemplate="item" let-item>
+                <a [routerLink]="item.routerLink" pRipple class="flex align-items-center px-3 py-3 cursor-pointer">
+                    <i [class]="item.icon + ' text-primary'"></i>
+                    <span class="ml-2">
+                        {{ item.label }}
+                    </span>
+         
+                </a>
+            </ng-template>
+           
+
+        </p-panelMenu>
+    </div>
+
+</div>
+
+

@@ -1,0 +1,117 @@
+<p-toast></p-toast>
+
+<div class="grid">
+    <div class="col-12">
+        
+                <div class="card px-3 py-6">
+        
+                    <p class="font-semibold text-lg">Gestión de prestamos</p>
+                    <p-table
+                    [value]="loanItems"
+                    [paginator]="true"
+                    [rows]="10"
+                    [lazy]="true"
+                    (onLazyLoad)="findAllClient($event)"
+                    [totalRecords]="totalRecords"
+                    [loading]="loading"
+                    styleClass="p-datatable-striped" 
+                    
+    
+                >
+                
+                
+                        <ng-template pTemplate="caption" >
+                            <div class="flex justify-content-end flex-wrap" >
+                            <div class="  flex align-items-center justify-content-center m-2 ">
+                    
+                            </div>
+                            <div class="flex align-items-center justify-content-center m-2 ">
+                                <div class="p-input-icon-left ">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" placeholder="Buscar libro" />
+                                </div>
+                                </div> 
+                            </div>
+                        </ng-template>
+                    
+                    
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width:15%" pResizableColumn>Registro</th>
+                                <th style="width:20%" pResizableColumn>Emisor</th>
+                                <th style="width:20%" pResizableColumn>Agente asignado</th>
+                                <th style="width:10%" class="text-center" pResizableColumn>Ejemplares</th>
+                                <th style="width:25%" pResizableColumn>Fecha entrega</th>
+                                <th style="width:25%"pResizableColumn>Última modificación</th>
+                                <th style="width:10%" pResizableColumn>Estado</th>
+                                <th style="text-align: center;width: 0%;" pResizableColumn>Acción</th>
+                    
+                            </tr>
+                        </ng-template>
+
+
+                        <ng-template pTemplate="body" let-loan>
+                            <tr>                        
+                                <td class="ellipsis">                                             
+                                    {{truncateText(loan.id, 12)}}                 
+                                </td>
+                    
+                                <td class="ellipsis">
+                                    {{ loan.user.person.names }} {{ loan.user.person.surnames  }}                                 
+                                </td>
+                                <td class="ellipsis">
+                                    {{ loan.reviewer && loan.reviewer.person ? (loan.reviewer.person.names + ' ' + loan.reviewer.person.surnames) : 'Por definir' }}
+                                </td>
+                                <td class="ellipsis text-center">
+                                    {{ loan.total_units }}                        
+                                </td>       
+        
+                                <td class="ellipsis">{{loan.date_returned  | date:'yyyy-MM-dd HH:mm:ss'}} </td> 
+                                <td class="ellipsis">{{loan.updated_at  | date:'yyyy-MM-dd HH:mm:ss'}} </td> 
+                                <td class="ellipsis">
+               
+        
+                                    <p-tag  [severity]="loan.status === 'rejected' ? 'danger': 'success'">
+                                        {{ loan.status === 'active' ? 'Activa': loan.status === 'accepted' ? 'Aceptada': loan.status === 'returned' ? 'Devuelta': loan.status === 'overdue' ? 'Atrasada': 'Rechazada'  }}
+                                      </p-tag>
+                                     </td> 
+        
+                                <td>
+                                                       
+                                  <div style="display: flex; justify-content: center; gap: 2px;">
+                                    <button pButton pRipple icon="pi pi-eye" class="mr-2" [text]="false" [raised]="true" [rounded]="true" (click)="onClickVerifiyData(loan)" ></button>                            
+                                    <p-button pbutton type="button" icon="pi pi-trash" [text]="false" [raised]="true" [rounded]="true"severity="warning"  ></p-button>
+                                  </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+
+
+                        <ng-template pTemplate="emptymessage" let-columns let-frozen="frozen">
+                            <tr>
+                                <td [attr.colspan]="columns?.length" class="text-center">
+                                    {{ frozen ? 'No hay datos en la tabla congelada.' : 'No hay datos disponibles.' }}
+                                </td>
+                            </tr>
+                        </ng-template>
+    
+    
+    
+     
+                
+                
+                 
+    
+                
+                
+                
+                </p-table>
+                </div>
+    
+    
+    </div>
+
+
+</div>
+
+

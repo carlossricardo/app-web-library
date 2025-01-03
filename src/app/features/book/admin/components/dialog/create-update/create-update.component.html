@@ -1,0 +1,193 @@
+<div class="grid">
+
+    <div class="col-12 -mb-4">
+
+        <form  [formGroup]="formBook">
+
+
+            <div class=" p-fluid p-formgrid grid pt-2  ">
+
+
+                <div class="field col-12">
+                    
+
+                    <p-fileUpload 
+                        
+            
+
+                        [disabled]="isBlocked"
+
+                        (onSelect)="onSelect($event)" 
+                        
+                        [multiple]="false" 
+                        accept="image/*" 
+                        maxFileSize="1000000">
+
+                        <ng-template pTemplate="header" let-chooseCallback="chooseCallback" let-clearCallback="clearCallback" >
+                            <div class="flex flex-wrap justify-content-between align-items-center flex-1 gap-2">
+                                <div class="flex gap-2">
+                                    <p-button label="Subir"  [link]="true" icon="pi pi-images" (onClick)="choose($event, chooseCallback)"   />
+                                    
+                                    <!-- <p-button label="Limpiar"  [link]="true" icon="pi pi-trash"  (onClick)="clearCallback()" [disabled]="!selectedFile" /> -->
+                                </div>
+                            
+                            </div>
+                        </ng-template>
+
+                        <ng-template  pTemplate="content" let-removeFileCallback="removeFileCallback">
+                            
+           
+                            <div *ngIf="selectedFile">
+                                <div class="flex align-self-center align-items-center justify-content-center">
+
+                                    <p-image 
+                                        loading="eager"
+                                        [src]="selectedFile.objectURL" 
+                                        alt="Image" 
+                                        class="border-round"
+                                        [imageStyle]="{ 'border-radius': '10px', 'padding': '5px' }"
+                                        width="35%" 
+                                    />
+                                      
+                                                                                                               
+                                    <p-button 
+                                        [link]="true" 
+                                        (click)="removeFile()"
+                                        label="Remover"
+                                        
+                                        [disabled]="isBlocked"
+                                        
+                                        [outlined]="false" 
+                                        [text]="true"
+                                        
+                                        [rounded]="true" 
+                                    />
+
+
+                                </div>
+                         
+
+
+                            </div>
+                        </ng-template>
+                        
+                        <ng-template pTemplate="file"> </ng-template>
+
+                        
+                    </p-fileUpload>
+                    
+ 
+
+
+                </div>
+                <div class="field col-12 ">
+                    <p class="font-medium text-red-700">El campo es requerido (*)</p>
+                </div>
+    
+    
+                <div class="field col-12 md:col-6  -mt-3   ">
+                    <label class="text-blue-700 font-medium "  for="username">Título*</label>                            
+                    <input 
+                        pInputText id="zip" placeholder="Ej. name" type="text" 
+                        formControlName="title" [ngClass]="{ 'is-invalid': fieldsValidate('title')}"
+                        
+                    />
+                    <small 
+                        *ngIf="formBook.get('title')?.errors?.['required']"
+                    >El campo es requerido.</small>
+                </div> 
+                <div class="field col-12 md:col-6  -mt-3   ">
+                    <label class="text-blue-700 font-medium "  for="username">Autor(a)*</label>                            
+                    <input 
+                        pInputText id="zip" placeholder="Ej. name" type="text" 
+                        formControlName="autor" [ngClass]="{ 'is-invalid': fieldsValidate('autor')}"
+                        
+                    />
+                    <small 
+                        *ngIf="formBook.get('autor')?.errors?.['required']"
+                    >El campo es requerido.</small>
+                </div> 
+
+                <div class="field col-12  -mt-3   ">
+                    <label class="text-blue-700 font-medium "  for="username">Categorías*</label>                            
+                    <p-multiSelect 
+                        
+                        formControlName="categories"
+                        optionValue="id"
+                        [options]="categoriesList"                         
+                        optionLabel="name" 
+                        placeholder="Ej. Educación, Ciencias, etc." 
+                        [maxSelectedLabels]="3" 
+                        styleClass="w-full md:w-80"
+                    />
+
+                    <small 
+                        *ngIf="formBook.get('categories')?.errors?.['required']"
+                    >El campo es requerido.</small>
+                </div> 
+
+
+                <div class="field col-12  -mt-3 ">
+                    <label class="text-blue-700 font-medium" for="username">Descripción*</label>                                        
+                    <textarea 
+                        placeholder="Ej. Centro de Movilización" rows="3" cols="30"  
+                        pInputTextarea
+                        formControlName="description" [ngClass]="{ 'is-invalid': fieldsValidate('description')}"
+                    ></textarea>
+                    <small 
+                        *ngIf="formBook.get('description')?.errors?.['required']"
+                    >La descripción es requerida.</small>
+                </div> 
+
+                <div class="field col-12 md:col-4  -mt-3   ">
+                    <label class="text-blue-700 font-medium "  for="username">Fecha emisión*</label>                            
+
+
+                    <p-calendar  formControlName="emission"  [ngClass]="{ 'is-invalid': fieldsValidate('emission')}" />
+                    <small 
+                        *ngIf="formBook.get('emission')?.errors?.['required']"
+                    >El campo es requerido.</small>
+                </div> 
+                <div class="field col-12 md:col-4  -mt-3   ">
+                    <label class="text-blue-700 font-medium "  for="username">Unidades*</label>                            
+ 
+                    <p-inputNumber  formControlName="units" [ngClass]="{ 'is-invalid': fieldsValidate('units')}" inputId="integeronly"  />
+                    <small 
+                        *ngIf="formBook.get('units')?.errors?.['required']"
+                    >El campo es requerido.</small>
+                </div> 
+                <div class="field col-12 md:col-4 -mt-3    ">
+                    <label class="text-blue-700 font-medium "  for="username">Estado*</label>                            
+                    <br>
+                    <p-inputSwitch formControlName="status" [ngClass]="{ 'is-invalid': fieldsValidate('status')}"  />
+                    <br>
+                    <small 
+                        *ngIf="formBook.get('status')?.errors?.['required']"
+                    >El campo es requerido.</small>
+                </div> 
+
+                
+
+            </div>
+
+
+
+        </form>
+
+
+        <button 
+            pButton pRipple 
+            
+            [label]=" !bookData ? 'Guardar registro': 'Guardar cambios'"
+            [disabled]=" !isChange || !formBook.valid "
+            (click)="isChange ? onClickCreateUpdateBook(): null"
+            class="w-full "
+        ></button>
+
+
+
+
+
+
+    </div>
+</div>

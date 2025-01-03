@@ -1,0 +1,53 @@
+
+
+<div class="layout-topbar">
+    <a class="layout-topbar-logo" routerLink="">
+        <img src="assets/images/logo.png" alt="logo">
+        <span class="text-3xl font-bold">Library app</span>
+    </a>
+
+    <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
+        <i class="pi pi-bars"></i>
+    </button>
+
+    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
+        <i class="pi pi-ellipsis-v"></i>
+    </button>
+
+    <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+        <button  (click)="onCreateButtonClick()" class="p-link layout-topbar-button">
+            <i class="pi pi-cart-plus"></i>
+            <div class="mx-2 font-semibold text-blue-900">{{ cartItemCount | async }}</div>
+            <span>Carrito de libros</span>
+        </button>
+
+
+
+
+        <button class="p-link layout-topbar-button">
+            <ng-container *ngIf="authService.user$ | async as user; else loading">
+                <p-avatar 
+    
+                image="{{api}}/files/getFile/users/{{user?.person?.image}}"
+                styleClass="mx-2" 
+                
+                shape="circle" />
+                <span> {{ user?.email }}</span>
+            </ng-container>
+            <ng-template #loading>
+                <div class="loading-avatar font-bold">
+                    ...
+                </div>
+            </ng-template>
+            
+        </button>
+
+       
+        <button (click)="onClickLogOut($event)" class="p-link layout-topbar-button" [routerLink]="'/documentation'">
+            <i class="pi pi-sign-out"></i>
+            <span>Cerrar sesión</span>
+        </button>
+    </div>
+</div>
+
+
